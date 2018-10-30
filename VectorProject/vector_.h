@@ -21,10 +21,14 @@ public:
 	void insert(int index, int number);
 	int& operator[](int index) const;
 	vector_&operator=(const vector_&obj);
+	//перемещение
+	vector_(vector_&&v);
+	vector_& operator=(vector_ &&v);
+	vector_& operator+=(const vector_&v);
 };
 ostream &operator<<(ostream &os, const vector_ & v);
 istream& operator>>(istream&is, vector_&d);
-
+vector_ operator + (const vector_&a, const  vector_ &b);
 //void f() {
 //	std::vector<int> v;
 //}

@@ -36,6 +36,7 @@ vector_::vector_(int size, int element)
 	{
 		this->arr[i] = element;
 	}
+
 }
 
 bool vector_::empty() const
@@ -145,6 +146,44 @@ vector_ & vector_::operator=(const vector_ & obj)
 	return *this;
 }
 
+vector_::vector_(vector_ && v)
+{
+	this->arr = v.arr;
+	this->size = v.size;
+	v.arr = nullptr;
+	v.size = 0;
+}
+
+vector_ & vector_::operator=(vector_ && v)
+{
+	this->~vector_();
+	this->arr = v.arr;
+	this->size = v.size;
+	v.arr = nullptr;
+	v.size = 0;
+
+	return *this;
+}
+
+vector_ & vector_::operator+=(const vector_ & v)
+{
+	if (v.getSize == 0) return *this;
+	
+	int *newArr = new int[this->size + v.size];
+	for (size_t i = 0; i < this->size; i++)
+	{
+		newArr[i] = this->arr[i];
+	}
+	for (size_t i = 0, k=this->size; i < this->size; i++,k++)
+	{
+		newArr[k] = v.arr[i]; 
+	}
+	delete[]this->arr;
+	this->arr = newArr;
+	this->size += v.size;
+	return *this;
+}
+
 ostream & operator<<(ostream & os, const vector_ & v)
 {
 
@@ -162,4 +201,11 @@ istream & operator>>(istream & is, vector_ & v)
 		is >> v[i];
 	}
 	return is;
+}
+
+vector_ operator+(const vector_ & a, const vector_ & b)
+{
+	vector_ n = a;
+	n += b;
+	return std::move(n);
 }

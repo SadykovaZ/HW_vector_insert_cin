@@ -12,5 +12,12 @@ void main() {
 	cout << endl;
 	v.erase(4);
 	cout << v;
+
+	vector_ v2(3,111);
+	v2 += v;
+	vector_ v3;
+	v3 = v2 + v;
+	cout << v3;
+
 	system("pause");
 }
